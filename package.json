@@ -1,5 +1,5 @@
 {
-  "homepage": "",
+  "homepage": ".",
   "name": "quiz-app",
   "version": "1.0.0",
   "private": true,
@@ -7,12 +7,14 @@
     "react",
     "typescript"
   ],
-  "author": "Vitalii Bondarenko<vitalii.bondarenko.ua@gmail.com",
+  "author": "Vitalii Bondarenko<vitalii.bondarenko.ua@gmail.com>",
   "dependencies": {
+    "@types/classnames": "^2.2.10",
     "@types/node": "^13.1.8",
     "@types/react": "^16.9.18",
     "@types/react-dom": "^16.9.5",
     "@types/react-router-dom": "^5.1.3",
+    "classnames": "^2.2.6",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -34,7 +36,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --ext .jsx,.js ./src/",
+    "lint-js": "eslint --ext .ts,.tsx ./src/ --fix",
+    "lint-css": "stylelint src/**/*.css src/**/*.scss --fix",
+    "lint": "npm run lint-js && npm run lint-css",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
