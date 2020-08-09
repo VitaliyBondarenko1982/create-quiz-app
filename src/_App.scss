@@ -1,3 +1,47 @@
+@font-face {
+  font-family: "Mont-Regular";
+  src: url("./fonts/Mont-Regular.otf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Mont-SemiBold";
+  src: url("./fonts/Mont-SemiBold.otf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Mont-Bold";
+  src: url("./fonts/Mont-Bold.otf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+ul {
+  list-style: none;
+}
+
+p,
+h1,
+h2,
+h3,
+ul,
+li {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
 body {
-  color: red;
+  font-family: "Mont-Regular", sans-serif;
+  margin: 0;
 }
