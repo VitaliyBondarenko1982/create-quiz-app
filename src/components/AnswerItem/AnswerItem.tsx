@@ -6,7 +6,7 @@ import './_AnswerItem.scss';
 
 interface Props {
   answer: Answer;
-  state: string;
+  answerState: string | null;
 }
 
 export const AnswerItem: FC<Props> = ({

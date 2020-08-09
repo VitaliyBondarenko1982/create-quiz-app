@@ -5,12 +5,16 @@ import './_Quiz.scss';
 export class Quiz extends Component {
   state = {
     activeQuestion: 0,
-    answerState: null,
+    answerState: {
+      id: 0,
+      result: '',
+    },
     quiz: [
       {
         question: 'The capital of Ukraine is...?',
         rightAnswerId: 2,
         id: 1,
+        result: '',
         answers: [
           { text: 'Lviv', id: 1 },
           { text: 'Kyiv', id: 2 },
@@ -22,6 +26,7 @@ export class Quiz extends Component {
         question: 'London is the capital of...',
         rightAnswerId: 3,
         id: 2,
+        result: '',
         answers: [
           { text: 'France', id: 1 },
           { text: 'Denmark', id: 2 },

@@ -1,14 +1,18 @@
-export interface State {
-  activeQuestion: number;
-  answerState: {
-    [id: number]: string;
-  } | null;
-  quiz: Quiz;
+export interface AnswerState {
+  id: number;
+  result: string;
 }
 
-export interface Quiz {
+export interface State {
+  activeQuestion: number;
+  answerState: AnswerState;
+  quiz: Question;
+}
+
+export interface Question {
   question: string;
   rightAnswerId: number;
+  result: string;
   answers: Answer[];
 }
 

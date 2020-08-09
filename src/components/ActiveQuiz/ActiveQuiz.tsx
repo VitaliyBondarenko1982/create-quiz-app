@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import {Answer} from "../../utils/interfaces";
+import {Answer, AnswerState} from "../../utils/interfaces";
 import './_ActiveQuiz.scss';
 import {AnswersList} from "../AnswersList";
 
@@ -8,9 +8,7 @@ interface Props {
   question: string;
   quizLength: number;
   answerNumber: number;
-  answerState: {
-    [id: number]: string;
-  } | null;
+  answerState: AnswerState;
 }
 
 export const ActiveQuiz: FC<Props> = ({
@@ -21,21 +19,21 @@ export const ActiveQuiz: FC<Props> = ({
   answerState
 }) => {
   return (
-    <div className="active-qiz">
+    <div className="active-quiz">
       <p className="active-quiz__question">
         <span>
-          <strong>{`${answerNumber}`}</strong>
-          &nbsp
+          <strong>{`${answerNumber}. `}</strong>
+          &nbsp;
           {question}
         </span>
         <small>
           {`${answerNumber} from ${quizLength}`}
         </small>
+      </p>
         <AnswersList
           answers={answers}
           answerState={answerState}
         />
-      </p>
     </div>
   )
 }
