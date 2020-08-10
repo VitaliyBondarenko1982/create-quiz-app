@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import {Answer, AnswerState} from "../../utils/interfaces";
+import { Answer, AnswerState } from '../../utils/interfaces';
+import { AnswersList } from '../AnswersList';
 import './_ActiveQuiz.scss';
-import {AnswersList} from "../AnswersList";
 
 interface Props {
   answers: Answer[];
@@ -9,6 +9,7 @@ interface Props {
   quizLength: number;
   answerNumber: number;
   answerState: AnswerState;
+  onAnswerClick: (id: number) => void;
 }
 
 export const ActiveQuiz: FC<Props> = ({
@@ -16,7 +17,8 @@ export const ActiveQuiz: FC<Props> = ({
   question,
   quizLength,
   answerNumber,
-  answerState
+  answerState,
+  onAnswerClick,
 }) => {
   return (
     <div className="active-quiz">
@@ -30,10 +32,11 @@ export const ActiveQuiz: FC<Props> = ({
           {`${answerNumber} from ${quizLength}`}
         </small>
       </p>
-        <AnswersList
-          answers={answers}
-          answerState={answerState}
-        />
+      <AnswersList
+        answers={answers}
+        answerState={answerState}
+        onAnswerClick={onAnswerClick}
+      />
     </div>
-  )
-}
+  );
+};

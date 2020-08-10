@@ -1,9 +1,11 @@
-import React, {Component} from 'react';
-import {ActiveQuiz} from "../components/ActiveQuiz";
+import React, { Component } from 'react';
+import { ActiveQuiz } from '../components/ActiveQuiz';
+import { State } from '../utils/interfaces';
 import './_Quiz.scss';
 
 export class Quiz extends Component {
   state = {
+    isFinished: false,
     activeQuestion: 0,
     answerState: {
       id: 0,
@@ -34,7 +36,58 @@ export class Quiz extends Component {
           { text: 'Italy', id: 4 },
         ],
       },
-    ]
+    ],
+  };
+
+  onAnswerClickHandler = (answerId: number) => {
+    const { answerState, activeQuestion, quiz } = this.state;
+
+    if (answerState.result === 'success') {
+      return;
+    }
+
+    const question = quiz[activeQuestion];
+
+    if (question.rightAnswerId === answerId) {
+      if (question.result !== 'error') {
+        question.result = 'success';
+      }
+
+      this.setState({
+        answerState: {
+          id: answerId,
+          result: 'success',
+        },
+      });
+
+      const timeout = setTimeout(() => {
+        if (this.isQuizFinished()) {
+          this.setState({
+            isFinished: true,
+          });
+        } else {
+          this.setState((prevState: State) => ({
+            activeQuestion: prevState.activeQuestion + 1,
+            answerState: {},
+          }));
+        }
+
+        clearTimeout(timeout);
+      }, 1000);
+    } else {
+      question.result = 'error';
+
+      this.setState({
+        answerState: {
+          id: answerId,
+          result: 'error',
+        },
+      });
+    }
+  };
+
+  isQuizFinished() {
+    return this.state.activeQuestion + 1 === this.state.quiz.length;
   }
 
   render() {
@@ -44,15 +97,22 @@ export class Quiz extends Component {
       <div className="quiz">
         <div className="quiz__container">
           <h1 className="quiz__title">Answer to all questions</h1>
-          <ActiveQuiz
-            answers={quiz[activeQuestion].answers}
-            question={quiz[activeQuestion].question}
-            quizLength={quiz.length}
-            answerNumber={activeQuestion + 1}
-            answerState={answerState}
-          />
+          {this.state.isFinished
+            ? (
+              <p>Finished</p>
+            )
+            : (
+              <ActiveQuiz
+                answers={quiz[activeQuestion].answers}
+                question={quiz[activeQuestion].question}
+                quizLength={quiz.length}
+                answerNumber={activeQuestion + 1}
+                answerState={answerState}
+                onAnswerClick={this.onAnswerClickHandler}
+              />
+            )}
         </div>
       </div>
-    )
+    );
   }
 }

@@ -1,16 +1,18 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import { Answer, AnswerState } from '../../utils/interfaces';
+import { AnswerItem } from '../AnswerItem';
 import './_AnswersList.scss';
-import {Answer, AnswerState} from "../../utils/interfaces";
-import {AnswerItem} from "../AnswerItem";
 
 interface Props {
   answers: Answer[];
   answerState: AnswerState;
+  onAnswerClick: (id: number) => void;
 }
 
 export const AnswersList: FC<Props> = ({
   answers,
-  answerState
+  answerState,
+  onAnswerClick,
 }) => {
   return (
     <div className="answer answers__list">
@@ -21,15 +23,17 @@ export const AnswersList: FC<Props> = ({
           }
 
           return null;
-        }
+        };
+
         return (
           <AnswerItem
             key={answer.id}
             answer={answer}
             answerState={answerStateResult()}
+            onAnswerClick={onAnswerClick}
           />
         );
       })}
     </div>
-  )
-}
+  );
+};

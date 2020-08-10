@@ -4,9 +4,10 @@ export interface AnswerState {
 }
 
 export interface State {
+  isFinished: boolean;
   activeQuestion: number;
   answerState: AnswerState;
-  quiz: Question;
+  quiz: Question[];
 }
 
 export interface Question {
