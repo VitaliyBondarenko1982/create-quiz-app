@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ActiveQuiz } from '../components/ActiveQuiz';
 import { State } from '../utils/interfaces';
 import './_Quiz.scss';
+import {FinishedQuiz} from "../components/FinishedQuiz";
 
 export class Quiz extends Component {
   state = {
@@ -99,7 +100,9 @@ export class Quiz extends Component {
           <h1 className="quiz__title">Answer to all questions</h1>
           {this.state.isFinished
             ? (
-              <p>Finished</p>
+              <FinishedQuiz
+                quiz={quiz}
+              />
             )
             : (
               <ActiveQuiz

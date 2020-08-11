@@ -1,0 +1,32 @@
+.finished-quiz {
+  padding: 20px;
+  border: 2px solid #fff;
+  border-radius: 5px;
+  color: #fff;
+  box-sizing: border-box;
+  margin: 0 10px;
+
+  &__list {
+    margin-bottom: 20px;
+  }
+
+  &__item {
+    margin-bottom: 10px;
+  }
+
+  &__result {
+    margin-bottom: 10px;
+  }
+
+  & .fa {
+    margin-left: 10px;
+  }
+
+  & .success {
+    color: rgba(161, 240, 69, 0.7);
+  }
+
+  & .error {
+    color: rgba(240, 87, 108, 0.7);
+  }
+}
