@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { ActiveQuiz } from '../components/ActiveQuiz';
-import { State } from '../utils/interfaces';
+import { ActiveQuiz } from '../../components/ActiveQuiz';
+import { State } from '../../utils/interfaces';
+import { FinishedQuiz } from '../../components/FinishedQuiz';
 import './_Quiz.scss';
-import {FinishedQuiz} from "../components/FinishedQuiz";
 
 export class Quiz extends Component {
   state = {
