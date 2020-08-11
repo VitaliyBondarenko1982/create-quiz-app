@@ -18,7 +18,7 @@ export const Button: FC<Props> = ({
     <button
       type="button"
       onClick={onClick}
-      className={cx('button', buttonType)}
+      className={cx('button', buttonType, { disabled })}
       disabled={disabled}
     >
       {children}
