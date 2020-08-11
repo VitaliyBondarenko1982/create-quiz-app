@@ -87,6 +87,21 @@ export class Quiz extends Component {
     }
   };
 
+  retryHandler = () => {
+    this.setState((prevState: State) => ({
+      ...prevState,
+      activeQuestion: 0,
+      answerState: {},
+      isFinished: false,
+      quiz: [...prevState.quiz].map(item => {
+        return {
+          ...item,
+          result: '',
+        };
+      }),
+    }));
+  };
+
   isQuizFinished() {
     return this.state.activeQuestion + 1 === this.state.quiz.length;
   }
@@ -102,6 +117,7 @@ export class Quiz extends Component {
             ? (
               <FinishedQuiz
                 quiz={quiz}
+                onRetry={this.retryHandler}
               />
             )
             : (

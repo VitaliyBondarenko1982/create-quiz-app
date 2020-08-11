@@ -1,15 +1,18 @@
 import React, { FC } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import cx from 'classnames';
-import './_FinishedQuiz.scss';
 import { Question } from '../../utils/interfaces';
+import { Button } from '../UI/Button/Button';
+import './_FinishedQuiz.scss';
 
 interface Props {
   quiz: Question[];
+  onRetry: () => void;
 }
 
 export const FinishedQuiz: FC<Props> = ({
   quiz,
+  onRetry,
 }) => {
   const successCount = quiz.filter(quizItem => quizItem.result === 'success');
 
@@ -17,7 +20,6 @@ export const FinishedQuiz: FC<Props> = ({
     <div className="finished-quiz">
       <ul className="finished-quiz__list">
         {quiz.map((quizItem, index) => {
-
           const { result } = quizItem;
 
           return (
@@ -36,7 +38,20 @@ export const FinishedQuiz: FC<Props> = ({
       </ul>
       <p className="finished-quiz__result">{`Right ${successCount.length} from ${quiz.length}`}</p>
       <div className="finished-quiz__buttons">
-        Buttons
+        <Button
+          buttonType="primary"
+          onClick={onRetry}
+          disabled={false}
+        >
+          Repeat
+        </Button>
+        <Button
+          buttonType="primary"
+          onClick={onRetry}
+          disabled={false}
+        >
+          All tests
+        </Button>
       </div>
     </div>
   );
