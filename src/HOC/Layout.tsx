@@ -18,6 +18,12 @@ export class Layout extends Component<any, any> {
     }));
   };
 
+  menuCloseHandler = () => {
+    this.setState({
+      menu: false,
+    });
+  };
+
   render() {
     const { menu } = this.state;
 
@@ -25,6 +31,7 @@ export class Layout extends Component<any, any> {
       <div className="layout">
         <Drawer
           isOpen={menu}
+          onClose={this.menuCloseHandler}
         />
         <MenuToggle
           onToggle={this.toggleMenuHandler}
