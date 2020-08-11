@@ -7,9 +7,10 @@ export class Quizzes extends Component {
   renderQuizzes = () => {
     return [1, 2, 3].map((quiz) => {
       return (
-        <li key={uuidv4()}>
+        <li className="quizzes__item" key={uuidv4()}>
           <NavLink
-            to={`quiz/:${quiz}`}
+            to={`quiz/${quiz}`}
+            className="quizzes__link"
           >
             {`Test #${quiz}`}
           </NavLink>
@@ -20,10 +21,10 @@ export class Quizzes extends Component {
 
   render() {
     return (
-      <div className="quiz-list">
-        <div className="quiz-list__container">
-          <h1>Tests</h1>
-          <ul>
+      <div className="quizzes">
+        <div className="quizzes_container">
+          <h1 className="quizzes__title">Tests</h1>
+          <ul className="quizzes__list">
             {this.renderQuizzes()}
           </ul>
         </div>

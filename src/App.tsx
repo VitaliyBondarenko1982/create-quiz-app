@@ -10,7 +10,6 @@ import { QuizCreator } from './containers/QuizCreator';
 const App = () => (
   <div className="App">
     <Layout>
-      <Quiz />
       <Switch>
         <Route path="/" component={Quizzes} exact />
         <Route path="/auth" component={Auth} />
