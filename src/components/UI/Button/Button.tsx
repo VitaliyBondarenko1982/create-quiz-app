@@ -5,7 +5,7 @@ import './_Button.scss';
 interface Props {
   disabled: boolean;
   buttonType: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 export const Button: FC<Props> = ({

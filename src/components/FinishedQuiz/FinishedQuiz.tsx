@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import cx from 'classnames';
 import { Question } from '../../utils/interfaces';
@@ -45,13 +46,14 @@ export const FinishedQuiz: FC<Props> = ({
         >
           Repeat
         </Button>
-        <Button
-          buttonType="primary"
-          onClick={onRetry}
-          disabled={false}
-        >
-          All tests
-        </Button>
+        <Link to="/">
+          <Button
+            buttonType="success"
+            disabled={false}
+          >
+            All tests
+          </Button>
+        </Link>
       </div>
     </div>
   );
