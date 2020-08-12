@@ -2,6 +2,7 @@ import React, { Component, FormEvent, ChangeEvent } from 'react';
 import { Button } from '../../components/UI/Button';
 import { Input } from '../../components/UI/Input';
 import { ControlsArr, AuthState } from '../../utils/interfaces';
+import axios from 'axios';
 import './_Auth.scss';
 
 function validateEmail(email: string) {
@@ -14,19 +15,19 @@ export class Auth extends Component {
   state = {
     isFormValid: false,
     formControls: [
-      {
-        value: '',
-        type: 'text',
-        name: 'nickname',
-        label: 'Nickname',
-        errorMessage: 'Enter correct nickname',
-        valid: false,
-        touched: false,
-        validation: {
-          required: true,
-          minLength: 6,
-        },
-      },
+      // {
+      //   value: '',
+      //   type: 'text',
+      //   name: 'nickname',
+      //   label: 'Nickname',
+      //   errorMessage: 'Enter correct nickname',
+      //   valid: false,
+      //   touched: false,
+      //   validation: {
+      //     required: true,
+      //     minLength: 6,
+      //   },
+      // },
       {
         value: '',
         type: 'email',
@@ -56,12 +57,46 @@ export class Auth extends Component {
     ],
   };
 
-  loginHandler = (event: FormEvent) => {
-    console.log(event);
+  loginHandler = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const authData = {
+      email: this.state.formControls[0].value,
+      password: this.state.formControls[1].value,
+      returnSecureToken: true,
+    };
+
+    try {
+      const response = await axios.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyCZ13ZcvnKFi14thxo55kh61gl0jvIVQaw',
+        authData,
+      );
+
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
-  registerHandler = (event: FormEvent) => {
-    console.log(event);
+  registerHandler = async (event: FormEvent) => {
+    event.preventDefault();
+
+    const authData = {
+      email: this.state.formControls[0].value,
+      password: this.state.formControls[1].value,
+      returnSecureToken: true,
+    };
+
+    try {
+      const response = await axios.post(
+        'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyCZ13ZcvnKFi14thxo55kh61gl0jvIVQaw',
+        authData,
+      );
+
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   submitHandler = (event: FormEvent) => {
@@ -134,7 +169,6 @@ export class Auth extends Component {
 
     return isValid;
   };
-
 
   renderInputs() {
     return this.state.formControls
