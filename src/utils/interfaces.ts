@@ -58,3 +58,8 @@ export interface ControlsArr {
   control?: Control;
   index?: number;
 }
+
+export interface QuizzesInterface {
+  id: string;
+  name: string;
+}

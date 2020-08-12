@@ -1,18 +1,45 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import { NavLink } from 'react-router-dom';
-import { v4 as uuidv4 } from 'uuid';
+import { QuizzesInterface } from '../../utils/interfaces';
 import './_Quizzes.scss';
 
 export class Quizzes extends Component {
+  state = {
+    quizzes: [
+      { id: Math.random().toString(), name: '' },
+    ],
+  };
+
+  async componentDidMount() {
+    try {
+      const response = await axios.get('https://create-quiz-app.firebaseio.com/quizzes.json');
+      const quizzes: QuizzesInterface[] = [];
+
+      Object.keys(response.data).forEach((key, index) => {
+        quizzes.push({
+          id: key,
+          name: `Test #${index + 1}`,
+        });
+      });
+
+      this.setState({
+        quizzes,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   renderQuizzes = () => {
-    return [1, 2, 3].map((quiz) => {
+    return this.state.quizzes.map((quiz) => {
       return (
-        <li className="quizzes__item" key={uuidv4()}>
+        <li className="quizzes__item" key={quiz.id}>
           <NavLink
-            to={`quiz/${quiz}`}
+            to={`quiz/${quiz.id}`}
             className="quizzes__link"
           >
-            {`Test #${quiz}`}
+            {quiz.name}
           </NavLink>
         </li>
       );
@@ -25,7 +52,7 @@ export class Quizzes extends Component {
         <div className="quizzes_container">
           <h1 className="quizzes__title">Tests</h1>
           <ul className="quizzes__list">
-            {this.renderQuizzes()}
+            {this.state.quizzes.length ? this.renderQuizzes() : null}
           </ul>
         </div>
       </div>
