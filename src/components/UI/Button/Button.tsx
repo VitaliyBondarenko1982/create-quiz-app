@@ -1,11 +1,11 @@
-import React, { FC } from 'react';
+import React, { FC, FormEvent } from 'react';
 import cx from 'classnames';
 import './_Button.scss';
 
 interface Props {
   disabled: boolean;
   buttonType: string;
-  onClick?: () => void;
+  onClick?: (event: FormEvent) => void;
 }
 
 export const Button: FC<Props> = ({

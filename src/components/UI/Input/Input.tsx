@@ -1,10 +1,10 @@
-import React, {ChangeEvent, FC} from 'react';
+import React, { ChangeEvent, FC } from 'react';
 import cx from 'classnames';
 import { v4 as uuidv4 } from 'uuid';
 import './_Input.scss';
 
 interface Props {
-  type: string;
+  type?: string;
   label: string;
   value: string;
   name: string;

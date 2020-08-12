@@ -1,32 +1,8 @@
 import React, { Component, FormEvent, ChangeEvent } from 'react';
 import { Button } from '../../components/UI/Button';
 import { Input } from '../../components/UI/Input';
+import { ControlsArr, AuthState } from '../../utils/interfaces';
 import './_Auth.scss';
-
-interface AuthState {
-  isFormValid: boolean;
-  formControls: Control[];
-}
-
-interface Control {
-  value: string;
-  type: string;
-  label: string;
-  name: string;
-  errorMessage: string;
-  valid: boolean;
-  touched: boolean;
-  validation: {
-    required: boolean;
-    minLength?: number;
-    email?: boolean;
-  };
-}
-
-interface ControlsArr {
-  control?: Control;
-  index?: number;
-}
 
 function validateEmail(email: string) {
   const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -80,12 +56,12 @@ export class Auth extends Component {
     ],
   };
 
-  loginHandler = () => {
-
+  loginHandler = (event: FormEvent) => {
+    console.log(event);
   };
 
-  registerHandler = () => {
-
+  registerHandler = (event: FormEvent) => {
+    console.log(event);
   };
 
   submitHandler = (event: FormEvent) => {
