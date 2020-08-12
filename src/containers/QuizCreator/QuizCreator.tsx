@@ -1,5 +1,5 @@
 import React, { ChangeEvent, Component, FormEvent } from 'react';
-import axios from 'axios';
+import axios from '../../utils/api';
 import { createControl, validate, validateForm } from '../../form/formFramework';
 import { Button } from '../../components/UI/Button';
 import {
@@ -64,9 +64,9 @@ export class QuizCreator extends Component {
       rightAnswerId,
       answers: [
         { text: formControls[1].value, id: formControls[1].id },
-        { text: formControls[1].value, id: formControls[2].id },
-        { text: formControls[1].value, id: formControls[3].id },
-        { text: formControls[1].value, id: formControls[4].id },
+        { text: formControls[2].value, id: formControls[2].id },
+        { text: formControls[3].value, id: formControls[3].id },
+        { text: formControls[4].value, id: formControls[4].id },
       ],
     };
 
@@ -86,7 +86,7 @@ export class QuizCreator extends Component {
   createQuizHandler = async (event: FormEvent) => {
     event.preventDefault();
     try {
-      await axios.post('https://create-quiz-app.firebaseio.com/quizzes.json', this.state.quiz);
+      await axios.post('quizzes.json', this.state.quiz);
       this.setState({
         quiz: [],
         isFormValid: false,

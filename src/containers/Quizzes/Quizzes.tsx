@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 import { NavLink } from 'react-router-dom';
 import { QuizzesInterface } from '../../utils/interfaces';
+import { Loader } from '../../components/UI/Loader';
+import axios from '../../utils/api';
 import './_Quizzes.scss';
 
 export class Quizzes extends Component {
@@ -9,11 +10,12 @@ export class Quizzes extends Component {
     quizzes: [
       { id: Math.random().toString(), name: '' },
     ],
+    loading: true,
   };
 
   async componentDidMount() {
     try {
-      const response = await axios.get('https://create-quiz-app.firebaseio.com/quizzes.json');
+      const response = await axios.get('quizzes.json');
       const quizzes: QuizzesInterface[] = [];
 
       Object.keys(response.data).forEach((key, index) => {
@@ -25,6 +27,7 @@ export class Quizzes extends Component {
 
       this.setState({
         quizzes,
+        loading: false,
       });
     } catch (e) {
       console.log(e);
@@ -51,9 +54,13 @@ export class Quizzes extends Component {
       <div className="quizzes">
         <div className="quizzes_container">
           <h1 className="quizzes__title">Tests</h1>
-          <ul className="quizzes__list">
-            {this.state.quizzes.length ? this.renderQuizzes() : null}
-          </ul>
+          {this.state.loading ? (
+            <Loader />
+          ) : (
+            <ul className="quizzes__list">
+              {this.state.quizzes.length ? this.renderQuizzes() : null}
+            </ul>
+          )}
         </div>
       </div>
     );
