@@ -1,41 +1,33 @@
-import React, { Component } from 'react';
+import React, { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { QuizzesInterface } from '../../utils/interfaces';
+import { connect } from 'react-redux';
+import { StateApp, QuizInterface } from '../../utils/interfaces';
 import { Loader } from '../../components/UI/Loader';
-import axios from '../../utils/api';
+import { fetchQuizzes as fetchQuizzesAction } from '../../store/actions/quizAction';
 import './_Quizzes.scss';
 
-export class Quizzes extends Component {
-  state = {
-    quizzes: [
-      { id: Math.random().toString(), name: '' },
-    ],
-    loading: true,
-  };
+interface StateProps {
+  quizzes: QuizInterface[];
+  loading: boolean;
+}
 
-  async componentDidMount() {
-    try {
-      const response = await axios.get('quizzes.json');
-      const quizzes: QuizzesInterface[] = [];
+interface DispatchProps {
+  fetchQuizzes: () => void;
+}
 
-      Object.keys(response.data).forEach((key, index) => {
-        quizzes.push({
-          id: key,
-          name: `Test #${index + 1}`,
-        });
-      });
+type Props = StateProps & DispatchProps;
 
-      this.setState({
-        quizzes,
-        loading: false,
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  }
+const QuizzesTemplate: FC<Props> = ({
+  quizzes,
+  loading,
+  fetchQuizzes,
+}) => {
+  useEffect(() => {
+    fetchQuizzes();
+  }, [fetchQuizzes]);
 
-  renderQuizzes = () => {
-    return this.state.quizzes.map((quiz) => {
+  const renderQuizzes = () => {
+    return quizzes.map((quiz) => {
       return (
         <li className="quizzes__item" key={quiz.id}>
           <NavLink
@@ -49,20 +41,29 @@ export class Quizzes extends Component {
     });
   };
 
-  render() {
-    return (
-      <div className="quizzes">
-        <div className="quizzes_container">
-          <h1 className="quizzes__title">Tests</h1>
-          {this.state.loading ? (
-            <Loader />
-          ) : (
-            <ul className="quizzes__list">
-              {this.state.quizzes.length ? this.renderQuizzes() : null}
-            </ul>
-          )}
-        </div>
+  return (
+    <div className="quizzes">
+      <div className="quizzes_container">
+        <h1 className="quizzes__title">Tests</h1>
+        {loading && quizzes.length ? (
+          <Loader />
+        ) : (
+          <ul className="quizzes__list">
+            {renderQuizzes()}
+          </ul>
+        )}
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
+
+const mapStateToProps = (state: StateApp) => ({
+  quizzes: state.quiz.quizzes,
+  loading: state.quiz.loading,
+});
+
+const mapDispatchToProps = {
+  fetchQuizzes: fetchQuizzesAction,
+};
+
+export const Quizzes = connect(mapStateToProps, mapDispatchToProps)(QuizzesTemplate);

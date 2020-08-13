@@ -59,7 +59,14 @@ export interface ControlsArr {
   index?: number;
 }
 
-export interface QuizzesInterface {
+export interface QuizInterface {
   id: string;
   name: string;
+}
+
+export interface StateApp {
+  quiz: {
+    quizzes: QuizInterface[];
+    loading: boolean;
+  };
 }
