@@ -2,12 +2,12 @@ import React, { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import cx from 'classnames';
-import { Question } from '../../utils/interfaces';
+import { QuizWithDetails } from '../../utils/interfaces';
 import { Button } from '../UI/Button/Button';
 import './_FinishedQuiz.scss';
 
 interface Props {
-  quiz: Question[];
+  quiz: QuizWithDetails[];
   onRetry: () => void;
 }
 

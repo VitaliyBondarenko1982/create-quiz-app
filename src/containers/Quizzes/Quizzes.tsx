@@ -1,7 +1,7 @@
 import React, { FC, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { StateApp, QuizInterface } from '../../utils/interfaces';
+import { AppState, QuizInterface } from '../../utils/interfaces';
 import { Loader } from '../../components/UI/Loader';
 import { fetchQuizzes as fetchQuizzesAction } from '../../store/actions/quizAction';
 import './_Quizzes.scss';
@@ -57,7 +57,7 @@ const QuizzesTemplate: FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: StateApp) => ({
+const mapStateToProps = (state: AppState) => ({
   quizzes: state.quiz.quizzes,
   loading: state.quiz.loading,
 });
