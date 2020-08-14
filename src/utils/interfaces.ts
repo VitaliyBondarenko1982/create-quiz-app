@@ -3,7 +3,7 @@ export interface AnswerState {
   result: string;
 }
 
-export interface QuizWithDetails {
+export interface Question {
   question: string;
   rightAnswerId: number;
   result: string;
@@ -22,7 +22,7 @@ export interface AuthState {
 }
 
 export interface CreateState extends AuthState{
-  quiz: QuizWithDetails[];
+  quiz: Question[];
   rightAnswerId: number;
 }
 
@@ -64,6 +64,6 @@ export interface AppState {
     isFinished: boolean;
     activeQuestion: number;
     answerState: AnswerState;
-    quiz: QuizWithDetails[];
+    quiz: Question[];
   };
 }

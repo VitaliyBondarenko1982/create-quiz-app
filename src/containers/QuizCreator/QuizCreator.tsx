@@ -3,7 +3,7 @@ import axios from '../../utils/api';
 import { createControl, validate, validateForm } from '../../form/formFramework';
 import { Button } from '../../components/UI/Button';
 import {
-  QuizWithDetails,
+  Question,
   CreateState,
   ControlsArr,
   OptionControl,
@@ -53,11 +53,11 @@ export class QuizCreator extends Component {
   addQuestionHandler = (event: FormEvent) => {
     event.preventDefault();
 
-    const quiz: Array<QuizWithDetails> = [...this.state.quiz] as [];
+    const quiz: Array<Question> = [...this.state.quiz] as [];
     const { formControls, rightAnswerId } = this.state;
     const index = quiz.length + 1;
 
-    const questionItem: QuizWithDetails = {
+    const questionItem: Question = {
       question: formControls[0].value,
       id: index,
       result: '',

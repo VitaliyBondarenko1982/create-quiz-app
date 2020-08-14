@@ -4,11 +4,15 @@ import { ActiveQuiz } from '../../components/ActiveQuiz';
 import {
   AppState,
   AnswerState,
-  QuizWithDetails,
+  Question,
 } from '../../utils/interfaces';
 import { FinishedQuiz } from '../../components/FinishedQuiz';
 import { Loader } from '../../components/UI/Loader';
-import { fetchQuizById as fetchQuizByIdAction } from '../../store/actions/quizAction';
+import {
+  fetchQuizById as fetchQuizByIdAction,
+  quizAnswerClick as quizAnswerClickAction,
+  retryQuiz as retryQuizAction,
+} from '../../store/actions/quizAction';
 import './_Quiz.scss';
 
 interface StateProps {
@@ -16,12 +20,14 @@ interface StateProps {
   activeQuestion: number;
   loading: boolean;
   answerState: AnswerState;
-  quiz: QuizWithDetails[];
+  quiz: Question[];
   match: any;
 }
 
 interface DispatchProps {
   fetchQuizById: (id: number) => void;
+  quizAnswerClick: (answerId: number) => void;
+  retryQuiz: () => void;
 }
 
 type Props = StateProps & DispatchProps;
@@ -32,94 +38,32 @@ const QuizTemplate: FC<Props> = ({
   loading,
   answerState,
   quiz,
-  match,
   fetchQuizById,
+  quizAnswerClick,
+  retryQuiz,
+  match,
 }) => {
   useEffect(() => {
     fetchQuizById(match.params.id);
+
+    return () => {
+      retryQuiz();
+    };
   }, [fetchQuizById]);
-
-  // const onAnswerClickHandler = (answerId: number) => {
-  //   // const {answerState, activeQuestion, quiz} = state;
-  //
-  //   if (answerState.result === 'success') {
-  //     return;
-  //   }
-  //
-  //   const question = quiz[activeQuestion];
-  //
-  //   if (question.rightAnswerId === answerId) {
-  //     if (question.result !== 'error') {
-  //       question.result = 'success';
-  //     }
-  //
-  //     this.setState({
-  //       answerState: {
-  //         id: answerId,
-  //         result: 'success',
-  //       },
-  //     });
-
-  //     const timeout = setTimeout(() => {
-  //       if (isQuizFinished()) {
-  //         this.setState({
-  //           isFinished: true,
-  //         });
-  //       } else {
-  //         this.setState((prevState: State) => ({
-  //           activeQuestion: prevState.activeQuestion + 1,
-  //           answerState: {},
-  //         }));
-  //       }
-  //
-  //       clearTimeout(timeout);
-  //     }, 1000);
-  //   } else {
-  //     question.result = 'error';
-  //
-  //     setState({
-  //       answerState: {
-  //         id: answerId,
-  //         result: 'error',
-  //       },
-  //     });
-  //   }
-  // };
-
-  // const retryHandler = () => {
-  //   setState((prevState: State) => ({
-  //     ...prevState,
-  //     activeQuestion: 0,
-  //     answerState: {},
-  //     isFinished: false,
-  //     quiz: [...prevState.quiz].map(item => {
-  //       return {
-  //         ...item,
-  //         result: '',
-  //       };
-  //     }),
-  //   }));
-  // };
-
-  // const isQuizFinished = () => {
-  //   return this.state.activeQuestion + 1 === this.state.quiz.length;
-  // };
-
-  // const { quiz, activeQuestion, answerState } = this.state;
 
   return (
     <div className="quiz">
       <div className="quiz__container">
         <h1 className="quiz__title">Answer to all questions</h1>
         {/* eslint-disable-next-line no-nested-ternary */}
-        {loading && quiz
+        {loading || !quiz.length
           ? <Loader />
           : (
             isFinished
               ? (
                 <FinishedQuiz
                   quiz={quiz}
-                  onRetry={() => console.log('Hello')}
+                  onRetry={retryQuiz}
                 />
               )
               : (
@@ -129,7 +73,7 @@ const QuizTemplate: FC<Props> = ({
                   quizLength={quiz.length}
                   answerNumber={activeQuestion + 1}
                   answerState={answerState}
-                  onAnswerClick={() => console.log('Hello')}
+                  onAnswerClick={quizAnswerClick}
                 />
               ))}
       </div>
@@ -147,6 +91,11 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = {
   fetchQuizById: fetchQuizByIdAction,
+  quizAnswerClick: quizAnswerClickAction,
+  retryQuiz: retryQuizAction,
 };
 
-export const Quiz = connect(mapStateToProps, mapDispatchToProps)(QuizTemplate);
+export const Quiz = connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(QuizTemplate);

@@ -45,7 +45,7 @@ const QuizzesTemplate: FC<Props> = ({
     <div className="quizzes">
       <div className="quizzes_container">
         <h1 className="quizzes__title">Tests</h1>
-        {loading && quizzes.length ? (
+        {loading || !quizzes.length ? (
           <Loader />
         ) : (
           <ul className="quizzes__list">

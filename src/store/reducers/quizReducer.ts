@@ -4,6 +4,8 @@ import {
   FETCH_QUIZZES_ERROR,
   FETCH_QUIZZES_START,
   FETCH_QUIZZES_SUCCESS,
+  FINISH_QUIZ, QUIZ_NEXT_QUESTION, QUIZ_RETRY,
+  QUIZ_SET_STATE,
 } from '../actions/actionTypes';
 
 const initialState = {
@@ -57,6 +59,52 @@ export const quizReducer = (
         ...state,
         loading: false,
         quiz: action.quiz,
+      };
+    case QUIZ_SET_STATE:
+      return {
+        ...state,
+        answerState: action.answerState,
+        quiz: state.quiz
+          .map((question, index) => {
+            return state.activeQuestion === index
+              ? {
+                ...question,
+                result: action.result,
+              } : {
+                ...question,
+              };
+          }),
+      };
+    case FINISH_QUIZ:
+      return {
+        ...state,
+        isFinished: true,
+        activeQuestion: 0,
+      };
+    case QUIZ_NEXT_QUESTION:
+      return {
+        ...state,
+        activeQuestion: action.questionNumber,
+        answerState: {
+          id: 0,
+          result: '',
+        },
+      };
+    case QUIZ_RETRY:
+      return {
+        ...state,
+        activeQuestion: 0,
+        isFinished: false,
+        answerState: {
+          id: 0,
+          result: '',
+        },
+        quiz: state.quiz.map(question => {
+          return {
+            ...question,
+            result: '',
+          };
+        }),
       };
     default:
       return state;
