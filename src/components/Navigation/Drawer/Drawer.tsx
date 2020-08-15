@@ -5,25 +5,35 @@ import { v4 as uuidv4 } from 'uuid';
 import { Backdrop } from '../../UI/BackDrop';
 import './_Drawer.scss';
 
-const links = [
-  { to: '/', label: 'List', exact: true },
-  { to: '/auth', label: 'Authorization', exact: false },
-  { to: '/quiz-creator', label: 'Create quiz', exact: false },
-];
-
 interface Props {
   isOpen: boolean;
   onClose: () => void;
+  isAuthenticated: boolean;
 }
 
 export const Drawer: FC<Props> = ({
   isOpen,
   onClose,
+  isAuthenticated,
 }) => {
-
   const clickHandler = () => {
     onClose();
   };
+
+  const links = [
+    { to: '/', label: 'List', exact: true },
+  ];
+
+  if (isAuthenticated) {
+    links.push(
+      { to: '/quiz-creator', label: 'Create quiz', exact: false },
+      { to: '/logout', label: 'Logout', exact: false },
+    );
+  } else {
+    links.push(
+      { to: '/auth', label: 'Authorization', exact: false },
+    );
+  }
 
   return (
     <>

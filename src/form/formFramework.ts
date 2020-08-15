@@ -1,6 +1,14 @@
-import { Validation, OptionControl } from '../utils/interfaces';
+import { Validation, OptionControl, Control } from '../utils/interfaces';
 
 export function createControl(config: OptionControl, validation: Validation): OptionControl {
+  return {
+    ...config,
+    validation,
+    valid: !validation,
+  };
+}
+
+export function createAuthControl(config: Control, validation: Validation): Control {
   return {
     ...config,
     validation,
@@ -22,7 +30,7 @@ export function validate(value: string, validation?: Validation): boolean {
   return isValid;
 }
 
-export function validateForm(formControls: Array<OptionControl>) {
+export function validateForm(formControls: Array<OptionControl | Control>) {
   let isFormValid = true;
 
   formControls.forEach((controlItem) => {

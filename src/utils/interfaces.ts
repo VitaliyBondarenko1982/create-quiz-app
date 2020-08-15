@@ -69,4 +69,7 @@ export interface AppState {
   create: {
     quiz: Question[];
   };
+  auth: {
+    token: string | null;
+  };
 }

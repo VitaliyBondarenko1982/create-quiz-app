@@ -10,7 +10,8 @@ import { Button } from '../../components/UI/Button';
 import {
   Question,
   ControlsArr,
-  OptionControl, AppState,
+  OptionControl,
+  AppState,
 } from '../../utils/interfaces';
 import {
   createQuizQuestion as createQuizQuestionAction,
@@ -142,7 +143,6 @@ const QuizCreatorTemplate: FC<Props> = ({
           label={control.label}
           value={control.value}
           name={control.name}
-          // onChange={event => changeHandler(event, control.name)}
           onChange={(event) => changeHandler(event, control.name)}
           valid={control.valid}
           touched={control.touched}
